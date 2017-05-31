@@ -53,7 +53,7 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      <ScrollableTabView>
+      <ScrollableTabView tabBarUnderlineStyle={{ backgroundColor: '#000' }}>
         <Feeds navigator={this.props.navigator} renderItem={this._renderItem} category="前端" tabLabel="前端" />
         <Feeds navigator={this.props.navigator} renderItem={this._renderItem} category="Android" tabLabel="Android" />
         <Feeds navigator={this.props.navigator} renderItem={this._renderItem} category="iOS" tabLabel="iOS" />
