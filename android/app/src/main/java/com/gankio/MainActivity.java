@@ -18,7 +18,7 @@ public class MainActivity extends SplashActivity {
         view.setBackgroundColor(Color.parseColor("#ffffff"));
         view.setGravity(Gravity.CENTER);
 
-        imageView.setBackgroundResource(R.mipmap.ic_launcher);
+        imageView.setBackgroundResource(R.drawable.ic_logo);
 
         view.addView(imageView);
         return view;
