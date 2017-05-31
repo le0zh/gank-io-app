@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, Image, TouchableNativeFeedback } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
-import { SCREEN_WIDTH } from '../../utils';
+import { px2dp, SCREEN_WIDTH } from '../../utils';
 import { get } from '../../data';
 
 export default class Header extends React.PureComponent {
@@ -10,17 +10,33 @@ export default class Header extends React.PureComponent {
     super();
 
     this.state = {
+      ready: false,
+      date: '',
       imageUrl: '',
     };
   }
 
   componentDidMount() {
-    get('http://gank.io/api/random/data/福利/1').then(res => {
-      this.setState({
-        imageUrl: res.results[0].url,
+    get('http://gank.io/api/day/history').then(res1 => {
+      const latest = res1.results[0].replaceAll('-', '/');
+
+      get(`http://gank.io/api/day/${latest}`).then(res => {
+        this.setState({
+          ready: true,
+          date: res1.results[0],
+          imageUrl: res.results['福利'][0].url,
+        });
       });
     });
   }
+
+  // componentDidMount() {
+  //   get('http://gank.io/api/random/data/福利/1').then(res => {
+  //     this.setState({
+  //       imageUrl: res.results[0].url,
+  //     });
+  //   });
+  // }
 
   _onImagePress = () => {
     Navigation.showModal({
@@ -33,16 +49,19 @@ export default class Header extends React.PureComponent {
   };
 
   render() {
-    if (this.state.imageUrl === '') {
+    if (!this.state.ready) {
       return null;
     }
 
     return (
-      <View style={styles.wrapper}>
-        <TouchableNativeFeedback onPress={() => this._onImagePress()}>
+      <TouchableNativeFeedback onPress={() => this._onImagePress()}>
+        <View style={styles.wrapper}>
           <Image style={styles.img} source={{ uri: this.state.imageUrl }} />
-        </TouchableNativeFeedback>
-      </View>
+          <View style={styles.mask}>
+            <Text style={styles.date}>{this.state.date}</Text>
+          </View>
+        </View>
+      </TouchableNativeFeedback>
     );
   }
 }
@@ -58,6 +77,25 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 300,
     resizeMode: 'cover',
+  },
+
+  mask: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingRight: 10,
+    backgroundColor: '#00000066',
+  },
+
+  date: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: px2dp(38),
   },
 
   title: {

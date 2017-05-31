@@ -32,7 +32,7 @@ export default class Section extends React.PureComponent {
     return this.props.items.map(item => (
       <TouchableNativeFeedback key={item._id} onPress={() => this._onItemPress(item.url)}>
         <View style={styles.item}>
-          <Text style={styles.desc}>{item.desc}</Text>
+          <Text style={styles.desc}>{item.desc} <Text style={styles.author}>(via {item.who})</Text></Text>
         </View>
       </TouchableNativeFeedback>
     ));
@@ -69,8 +69,13 @@ const styles = StyleSheet.create({
   },
 
   desc: {
-    color: '#757575',
+    color: '#212121',
     fontSize: px2dp(38),
+  },
+
+  author: {
+    color: '#757575',
+    fontSize: px2dp(34),
   },
 
   item: {
