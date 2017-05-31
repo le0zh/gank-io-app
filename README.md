@@ -1,8 +1,6 @@
 ## gank.io RN client
 
-### ScreenShots
-
-<img src="https://github.com/le0zh/gank-io-app/blob/master/docs/Screenshot_2017-05-31-14-51-31-473_com.gankio.png" text" width="50%" height="50%">
+### ScreenShots :heart:
 
 ![img](./docs/Screenshot_2017-05-31-14-51-31-473_com.gankio.png)
 
